@@ -3,9 +3,14 @@ cd /playpen/hongxuan/DNA_Protein/
 
 # 全局超参数
 SEEDS=10
-CYCLES=12
-STEP=200
+CYCLES=8
+STEP=300
 SAMPLES=5
+
+# 生成运行根目录
+TIMESTAMP=$(date '+%Y%m%d-%H%M')
+RUN_ROOT="results/${TIMESTAMP}_SEEDS${SEEDS}_CYCLES${CYCLES}_STEP${STEP}_SAMPLES${SAMPLES}"
+mkdir -p "$RUN_ROOT"
 
 # ------------- 逐 DNA × Protein 配对 ------------------------------------------------
 for dna_fasta in Sequences/DNA/*.fasta; do
@@ -15,18 +20,22 @@ for dna_fasta in Sequences/DNA/*.fasta; do
     prot_name=$(basename "$protein_fasta" .fasta)
     run_name="${dna_name}_${prot_name}"
 
-    msa_out="results/msa_results/${run_name}"
-    json_out="results/json_results/${run_name}.json"
-    af3_out="results/af3_results/${run_name}"
-    deeppbs_out="results/deeppbs_results/${run_name}"
-
-    log_dir="results/log_results/${run_name}"
+    # 所有输出路径基于运行根目录
+    msa_out="${RUN_ROOT}/msa_results/${run_name}"
+    json_out="${RUN_ROOT}/json_results/${run_name}.json"
+    af3_out="${RUN_ROOT}/af3_results/${run_name}"
+    deeppbs_out="${RUN_ROOT}/deeppbs_results/${run_name}"
+    log_dir="${RUN_ROOT}/log_results/${run_name}"
+    
+    # 创建目录结构
     mkdir -p "$msa_out" "$log_dir" "$(dirname "$json_out")" "$af3_out" "$deeppbs_out"
     log_file="$log_dir/run.log"
 
     echo "[$(date '+%F %T')] START pipeline ${run_name}" | tee -a "$log_file"
     pipeline_start=$(date +%s)
 
+    # ...（后续步骤保持原样，路径已自动指向新目录）...
+    
     # STEP 1: MSA
     step1_start=$(date +%s)
     python Protenix/colabfold_msa.py \
@@ -39,13 +48,13 @@ for dna_fasta in Sequences/DNA/*.fasta; do
     step1_end=$(date +%s)
     echo "STEP 1 done in $((step1_end - step1_start))s" | tee -a "$log_file"
 
-    # STEP 2: extract chain dir
+    # STEP 2: extract chain dir（保持原样）
     step2_start=$(date +%s)
     msa_chain_dir="$msa_out/msa/0/"
     step2_end=$(date +%s)
     echo "STEP 2 done in $((step2_end - step2_start))s" | tee -a "$log_file"
 
-    # STEP 3: JSON conversion
+    # STEP 3: JSON conversion（保持原样）
     step3_start=$(date +%s)
     python Protenix/fasta_to_json.py \
       "$dna_fasta" \
@@ -55,7 +64,7 @@ for dna_fasta in Sequences/DNA/*.fasta; do
     step3_end=$(date +%s)
     echo "STEP 3 done in $((step3_end - step3_start))s" | tee -a "$log_file"
 
-    # STEP 4: Protenix predict
+    # STEP 4: Protenix predict（保持原样）
     step4_start=$(date +%s)
     protenix predict \
       --input "$json_out" \
@@ -67,7 +76,7 @@ for dna_fasta in Sequences/DNA/*.fasta; do
     step4_end=$(date +%s)
     echo "STEP 4 done in $((step4_end - step4_start))s" | tee -a "$log_file"
 
-    # STEP 5: DeepPBS predict
+    # STEP 5: DeepPBS predict（保持原样）
     step5_start=$(date +%s)
     pred_dir="$af3_out/${run_name}/seed_${SEEDS}/predictions"
     echo $pred_dir
@@ -89,7 +98,6 @@ for dna_fasta in Sequences/DNA/*.fasta; do
     echo "TOTAL pipeline time: $((pipeline_end - pipeline_start))s" | tee -a "$log_file"
   done
 done
-
 
 # cd /playpen/hongxuan/DNA_Protein/
 

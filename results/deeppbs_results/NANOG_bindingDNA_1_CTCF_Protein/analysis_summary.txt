@@ -1,6 +1,0 @@
-DeepPBS Analysis Summary
-=========================
-Input file: NANOG_bindingDNA_1_CTCF_Protein_seed_10_sample_4.cif
-Basename: NANOG_bindingDNA_1_CTCF_Protein_seed_10_sample_4
-Analysis mode: full
-Date: Sun May  4 08:58:50 UTC 2025
