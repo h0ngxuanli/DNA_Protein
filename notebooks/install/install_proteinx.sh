@@ -1,0 +1,1 @@
+conda create -n af3 python=3.10

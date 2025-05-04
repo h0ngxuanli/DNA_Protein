@@ -1,0 +1,6 @@
+DeepPBS Analysis Summary
+=========================
+Input file: NANOG_bindingDNA_2_MYC_protein_seed_10_sample_4.cif
+Basename: NANOG_bindingDNA_2_MYC_protein_seed_10_sample_4
+Analysis mode: full
+Date: Sun May  4 10:06:42 UTC 2025

@@ -1,0 +1,6 @@
+DeepPBS Analysis Summary
+=========================
+Input file: MYC_bindingDNA_+_CTCF_Protein_seed_10_sample_4.cif
+Basename: MYC_bindingDNA_+_CTCF_Protein_seed_10_sample_4
+Analysis mode: full
+Date: Sun May  4 07:01:31 UTC 2025

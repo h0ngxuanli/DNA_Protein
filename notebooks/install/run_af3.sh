@@ -1,0 +1,1 @@
+protenix predict --input /playpen/hongxuan/DNA_Protein/Protenix/json/pair.json --out_dir /playpen/hongxuan/DNA_Protein/Protenix/structures --seeds 10 --cycle 40
